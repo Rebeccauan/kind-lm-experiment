@@ -1,6 +1,10 @@
 # KIND-LM Style Experiment Design: Clean & Efficient Language Learning
-
 This project outlines a cognitively inspired, sample-efficient language modeling experiment aligned with the KIND-LM project.
+
+## Corpus
+This project uses a curated child-directed speech (CDS) corpus adapted from the **CHILDES Bates English corpus**, a widely used open resource in developmental linguistics.
+
+All utterances are short, repetitive, semantically simple, and structurally aligned with real parental input to young children. This design supports modeling implicit learning, recasting, and gradual, natural language acquisition patterns.
 
 ## Core Idea
 - Clean, well-formed child-directed linguistic input
