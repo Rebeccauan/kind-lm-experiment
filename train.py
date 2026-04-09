@@ -295,3 +295,44 @@ print("\n--- Generated Child-Directed Sentences ---")
 print(generator("dere's", max_length=12, num_return_sequences=1))
 print(generator("it's", max_length=12, num_return_sequences=1))
 print(generator("he's", max_length=12, num_return_sequences=1))
+
+# ---------- Evaluation: BLEU & ROUGE ----------
+# Run once: pip install evaluate nltk
+import evaluate
+import nltk
+from nltk.tokenize import word_tokenize
+
+nltk.download('punkt', quiet=True)
+
+# Reference sentences (from your corpus, user-selected)
+reference_sentences = [
+    "uh more water",
+    "dere's my car",
+    "look at dis Dada",
+    "it's a dwiveway",
+    "he's still sleeping",
+    "yeah eat ie cweam",
+    "no dat a horn",
+    "bohs peoples falled down",
+    "he's got a hat",
+    "put it in duh boat"
+]
+
+# Generated sentences (using high-frequency prefixes from your data)
+gen1 = generator("dere's", max_length=12, num_return_sequences=1)[0]['generated_text']
+gen2 = generator("it's", max_length=12, num_return_sequences=1)[0]['generated_text']
+gen3 = generator("he's", max_length=12, num_return_sequences=1)[0]['generated_text']
+generated_sentences = [gen1, gen2, gen3]
+
+# BLEU (requires tokenization)
+bleu = evaluate.load("bleu")
+references_tokenized = [[word_tokenize(ref)] for ref in reference_sentences]
+predictions_tokenized = [word_tokenize(pred) for pred in generated_sentences]
+bleu_score = bleu.compute(predictions=predictions_tokenized, references=references_tokenized)
+print(f"\nBLEU score: {bleu_score['bleu']:.4f}")
+
+# ROUGE (works on raw strings)
+rouge = evaluate.load("rouge")
+rouge_score = rouge.compute(predictions=generated_sentences, references=reference_sentences)
+print(f"ROUGE-1: {rouge_score['rouge1']:.4f}")
+print(f"ROUGE-L: {rouge_score['rougeL']:.4f}")
