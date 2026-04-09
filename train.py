@@ -2,6 +2,7 @@
 # Uses clean, simplified child-directed text for sample-efficient training
 from transformers import AutoTokenizer, AutoModelForCausalLM, Trainer, TrainingArguments
 from datasets import Dataset
+import math
 
 # Small, clean child-directed text corpus
 data = """that's my water
@@ -240,9 +241,12 @@ yeah
 what's that
 das your watch
 day want more ie cweam
-way over"""
-# Load dataset
-dataset = Dataset.from_dict(data)
+way over
+"""
+
+# --------------- ---------------
+lines = [line.strip() for line in data.splitlines() if line.strip()]
+dataset = Dataset.from_dict({"text": lines})
 
 # Load tokenizer and model
 tokenizer = AutoTokenizer.from_pretrained("distilgpt2")
@@ -264,8 +268,8 @@ training_args = TrainingArguments(
     learning_rate=5e-5,        
     logging_dir="./logs",
     logging_steps=10,
-    evaluation_strategy="epoch",  
-    save_strategy="epoch",
+    evaluation_strategy="no",
+    save_strategy="no",
     report_to="none"
 )
 
@@ -278,11 +282,12 @@ trainer = Trainer(
 
 trainer.train()
 
-import math
-eval_results = trainer.evaluate()
+# Perplexity
+eval_results = trainer.evaluate(eval_dataset=tokenized_dataset)
 perplexity = math.exp(eval_results["eval_loss"])
 print(f"\n===== Perplexity: {perplexity:.2f} =====")
 
+# Generation
 from transformers import pipeline
 generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
 
