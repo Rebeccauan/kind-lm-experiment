@@ -414,10 +414,13 @@ tokenized_dataset.set_format("torch", columns=["input_ids", "attention_mask"])
 # Set training arguments
 training_args = TrainingArguments(
     output_dir="./results",
-    num_train_epochs=5,
-    per_device_train_batch_size=2,
+    num_train_epochs=10,       
+    per_device_train_batch_size=4,
+    learning_rate=5e-5,        
     logging_dir="./logs",
-    logging_steps=1,
+    logging_steps=10,
+    evaluation_strategy="epoch",  
+    save_strategy="epoch",
     report_to="none"
 )
 
