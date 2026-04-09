@@ -18,3 +18,5 @@ This project outlines a cognitively inspired, sample-efficient language modeling
 - Cognitively plausible language modelling
 - Human-centred, sustainable NLP
 - Robust, safe, auditable model behaviour
+## Usage
+Run the training script with Python or on Google Colab GPU for accelerated experimentation.
