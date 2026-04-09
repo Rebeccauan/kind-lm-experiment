@@ -4,398 +4,243 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, Trainer, TrainingA
 from datasets import Dataset
 
 # Small, clean child-directed text corpus
-data = {
-    "text": [
-        "Look at the doggy.",
-        "See the birdie?",
-        "Oh, pretty flower.",
-        "Yes, that's right.",
-        "Good job!",
-        "You're so good.",
-        "I like it.",
-        "You like it?",
-        "More?",
-        "Again?",
-        "Play ball.",
-        "Throw ball.",
-        "Catch ball.",
-        "Kick ball.",
-        "I run.",
-        "You run.",
-        "We run.",
-        "Jump jump.",
-        "High jump.",
-        "I jump.",
-        "You jump.",
-        "We jump.",
-        "Sing song.",
-        "Nice song.",
-        "I sing.",
-        "You sing.",
-        "We sing.",
-        "Read book.",
-        "Book here.",
-        "Read to me.",
-        "I read.",
-        "You read.",
-        "We read.",
-        "Eat apple.",
-        "Yummy apple.",
-        "I eat.",
-        "You eat.",
-        "We eat.",
-        "Drink milk.",
-        "Good milk.",
-        "I drink.",
-        "You drink.",
-        "We drink.",
-        "Sleepy now.",
-        "Time to sleep.",
-        "Night night.",
-        "Bed time.",
-        "Wake up.",
-        "Good morning.",
-        "Hi there.",
-        "Hello baby.",
-        "Mommy here.",
-        "Daddy home.",
-        "Love you.",
-        "Love you too.",
-        "Kiss kiss.",
-        "Hug hug.",
-        "Where's ball?",
-        "There's ball.",
-        "Where's bear?",
-        "There's bear.",
-        "Where's dog?",
-        "There's dog.",
-        "What's this?",
-        "It's a car.",
-        "What's that?",
-        "It's a doll.",
-        "What color?",
-        "Red car.",
-        "Blue ball.",
-        "Green tree.",
-        "Yellow flower.",
-        "Big dog.",
-        "Small cat.",
-        "Soft bear.",
-        "Hard block.",
-        "Hot soup.",
-        "Cold milk.",
-        "Happy today.",
-        "Good day.",
-        "Fun play.",
-        "More play.",
-        "Again please.",
-        "Please?",
-        "Thank you.",
-        "You're welcome.",
-        "Sorry.",
-        "That's okay.",
-        "Excuse me.",
-        "Come here.",
-        "Let's go.",
-        "Go outside.",
-        "Play outside.",
-        "See sky.",
-        "See clouds.",
-        "See birds.",
-        "See bugs.",
-        "Watch me.",
-        "Look at me.",
-        "Look here.",
-        "Look at that.",
-        "Do it again.",
-        "Let's play.",
-        "Let's sing.",
-        "Let's read.",
-        "Let's eat.",
-        "Let's drink.",
-        "Sit down please.",
-        "Stand up please.",
-        "Open the door.",
-        "Close the door.",
-        "Open your book.",
-        "Close your book.",
-        "Take the toy.",
-        "Give it to me.",
-        "Give me the cup.",
-        "Here you are.",
-        "Here it is.",
-        "I see you.",
-        "I see the cat.",
-        "I see the dog.",
-        "I see the bird.",
-        "I see a car.",
-        "I see a toy.",
-        "I see a tree.",
-        "I see a flower.",
-        "It's a bird.",
-        "It's a dog.",
-        "It's a cat.",
-        "It's a toy.",
-        "It's a ball.",
-        "It's a book.",
-        "It's funny.",
-        "It's nice.",
-        "It's good.",
-        "It's soft.",
-        "It's hard.",
-        "It's big.",
-        "It's small.",
-        "It's hot.",
-        "It's cold.",
-        "I am happy.",
-        "You are happy.",
-        "We are happy.",
-        "I am good.",
-        "You are good.",
-        "We are good.",
-        "I am little.",
-        "You are little.",
-        "I am big.",
-        "You are big.",
-        "My toy.",
-        "My book.",
-        "My ball.",
-        "My cup.",
-        "Your toy.",
-        "Your book.",
-        "Your ball.",
-        "Your cup.",
-        "Daddy is here.",
-        "Mommy is here.",
-        "Baby is here.",
-        "Dog is here.",
-        "Cat is here.",
-        "Ball is here.",
-        "Toy is here.",
-        "Where is it?",
-        "Where is mommy?",
-        "Where is daddy?",
-        "Where is baby?",
-        "Where is the ball?",
-        "Where is the toy?",
-        "Where is the book?",
-        "Where is the cup?",
-        "Want more?",
-        "Want milk?",
-        "Want water?",
-        "Want apple?",
-        "Want banana?",
-        "Want bread?",
-        "Want toy?",
-        "Want ball?",
-        "I want milk.",
-        "I want water.",
-        "I want apple.",
-        "I want banana.",
-        "I want bread.",
-        "I want toy.",
-        "I want ball.",
-        "I want book.",
-        "I want to play.",
-        "I want to sing.",
-        "I want to read.",
-        "I want to run.",
-        "I want to jump.",
-        "Do you like it?",
-        "Yes, I like it.",
-        "No, I don't like it.",
-        "I like milk.",
-        "I like water.",
-        "I like apple.",
-        "I like banana.",
-        "I like bread.",
-        "I like ball.",
-        "I like toy.",
-        "I like book.",
-        "I like dog.",
-        "I like cat.",
-        "I like bird.",
-        "I like to play.",
-        "I like to sing.",
-        "I like to read.",
-        "I like to run.",
-        "I like to jump.",
-        "I can play.",
-        "I can sing.",
-        "I can read.",
-        "I can run.",
-        "I can jump.",
-        "I can walk.",
-        "I can dance.",
-        "I can draw.",
-        "You can play.",
-        "You can sing.",
-        "You can read.",
-        "You can run.",
-        "You can jump.",
-        "We can play.",
-        "We can sing.",
-        "We can read.",
-        "We can run.",
-        "We can jump.",
-        "This is big.",
-        "This is small.",
-        "This is hot.",
-        "This is cold.",
-        "This is soft.",
-        "This is hard.",
-        "This is red.",
-        "This is blue.",
-        "This is green.",
-        "This is yellow.",
-        "This is pink.",
-        "This is orange.",
-        "This is purple.",
-        "This is brown.",
-        "This is black.",
-        "This is white.",
-        "That is big.",
-        "That is small.",
-        "That is hot.",
-        "That is cold.",
-        "That is soft.",
-        "That is hard.",
-        "That is red.",
-        "That is blue.",
-        "That is green.",
-        "That is yellow.",
-        "Sun is bright.",
-        "Moon is bright.",
-        "Stars are bright.",
-        "Sky is blue.",
-        "Clouds are white.",
-        "Grass is green.",
-        "Flowers are pretty.",
-        "Trees are tall.",
-        "Birds can fly.",
-        "Dogs can run.",
-        "Cats can jump.",
-        "Fish can swim.",
-        "Rabbits can hop.",
-        "Good boy.",
-        "Good girl.",
-        "Good baby.",
-        "Good job.",
-        "Well done.",
-        "That's right.",
-        "That's good.",
-        "Very good.",
-        "Very nice.",
-        "Very funny.",
-        "Very happy.",
-        "Time to eat.",
-        "Time to drink.",
-        "Time to play.",
-        "Time to sing.",
-        "Time to read.",
-        "Time to sleep.",
-        "Time to wake up.",
-        "Time to go home.",
-        "Time to go out.",
-        "Let's go home.",
-        "Let's go out.",
-        "Let's go play.",
-        "Let's go walk.",
-        "Let's go run.",
-        "Let's go jump.",
-        "Come play with me.",
-        "Play with me please.",
-        "Sing with me please.",
-        "Read with me please.",
-        "Eat with me please.",
-        "Drink with me please.",
-        "Run with me please.",
-        "Jump with me please.",
-        "Walk with me please.",
-        "Smile for me.",
-        "Say please.",
-        "Say thank you.",
-        "Say sorry.",
-        "Say excuse me.",
-        "Say hello.",
-        "Say goodbye.",
-        "Goodbye everyone.",
-        "See you tomorrow.",
-        "See you soon.",
-        "Night night baby.",
-        "Sleep tight baby.",
-        "Sweet dreams baby.",
-        "I love you so much.",
-        "You are my baby.",
-        "You are my love.",
-        "You are my sweet.",
-        "You are so cute.",
-        "You are so nice.",
-        "You are so good.",
-        "You are so funny.",
-        "You are so happy.",
-        "We love you so much.",
-        "Family is happy.",
-        "We are together.",
-        "We are a family.",
-        "Play together now.",
-        "Sing together now.",
-        "Read together now.",
-        "Eat together now.",
-        "Drink together now.",
-        "Run together now.",
-        "Jump together now.",
-        "Walk together now.",
-        "Dance together now.",
-        "Draw together now.",
-        "All done now.",
-        "Finished now.",
-        "Clean up now.",
-        "Put it away now.",
-        "Put toy away.",
-        "Put book away.",
-        "Put ball away.",
-        "Put cup away.",
-        "Wash hands please.",
-        "Wash face please.",
-        "Brush teeth please.",
-        "Comb hair please.",
-        "Get dressed please.",
-        "Put shoes on.",
-        "Put coat on.",
-        "Put hat on.",
-        "Ready to go.",
-        "Let's go now.",
-        "Let's start now.",
-        "Let's finish now.",
-        "Wait a minute.",
-        "Wait for me.",
-        "Wait please.",
-        "Hurry up please.",
-        "Slow down please.",
-        "Be careful please.",
-        "Be gentle please.",
-        "Be quiet please.",
-        "Be happy please.",
-        "Be good please.",
-        "Look outside.",
-        "See outside.",
-        "Play outside.",
-        "Run outside.",
-        "Jump outside.",
-        "Walk outside.",
-        "Fresh air.",
-        "Nice day.",
-        "Sunny day.",
-        "Happy day.",
-        "Fun day.",
-        "Great day.",
-        "Wonderful day.",
-        "Beautiful day.",
-        "Lovely day.",
-        "Perfect day."
-    ]
-}
+data = """that's my water
+I'm gonna uh reek it
+put it in duh boat
+yeah
+gasps cars go in there
+gasps cars go in there
+dere's water in dere Dada
+dere's water in dere Dada
+look at dis water Dada
+uh ah
+go sit down on duh padwo
+yeah
+don't tuuk my water
+no I um
+I gotta say cheese
+uh eh
+I gotta say cheese
+oh dere's duh aiwpwane comin
+beeuo
+I'm kwert duh aiwpwane
+kwert dee airplane
+kwer duh airplane
+yeah
+Dada look at dis one
+look look look
+look at my tick inna h
+look at my tick in here
+ah it's driving away
+yeah
+look at dis Dada
+whoo whoo whoo whoo whoo
+and a dwiveway
+in duh driveway
+oooo eeso
+and a dwiveway
+it's a dwiveway
+it's a dwiveway
+it's nos a bwes dwiveway
+no I don't want my car back out
+it's a dwiveway Dad
+it's a dwiveway
+yeah
+it it's my driveway
+das dwiveway Dad
+dat a dwiveway Daddy
+dere's my car
+i's i's got a howe in it
+aap dere's di airplane
+me ap
+I hafta kwert it
+bee beeuo beeuo beeuo beeuo
+yeah
+no no
+I show I show you my gun
+das my gun
+dere's my gun
+beeuo
+I kwert duh airplane
+no I kwert dee airplane
+kwert dee airplane
+kwert dee airplane
+yeah
+like like with zis gun
+yeah
+sshee my gun
+sshee my gun
+can't get it out
+beeuo beeuo beeuo
+I kwert de airplane
+beeuo beeuo
+yeah
+beeuo beeuo beeuo beeuo beeuo beeuo beeuo beeuo
+I fink dat a heocopter
+beeuo beeuo
+beeuo beeuo
+dat an airplane an za on nere
+um nothing
+cowboy
+der gotta go in duh right way
+wike my car
+wike wike dis car
+wike dis car Dada
+is inna water
+ee ee eann gave me dis
+ee eann gave me
+gave dis
+yeah eann gave me dis car
+cars in duh water
+dere's cars in duh water
+and dere's my peoples in duh water
+dere gun weep in duh water
+dat make habwa egada weep
+dat make habwa iguna weep
+put duh cars in dere
+there's nothing in here
+Daddy Daddy dere's nothing in dere
+oh dere's nothing in dere
+get them
+duh cowboys outta dere
+yeah every everything goes in duh water
+um zebra
+it's it's uh carry it
+yeah
+suitcase with me
+suitcase
+yeah
+everybody gotta go in duh water
+yeah just like at Helen's house
+soomo
+soomo
+soomo
+zoom
+zoom
+whee
+stick
+yeah
+from my flower
+how bout my coffee pot
+um put some water in nere
+yeah
+sssso
+sssso
+not post too pill it
+I did
+cowboy dat alright
+cowboy dat alright
+yeah
+cowboy alright in
+cowboy's alright
+he's alright
+yeah
+he's still weepin o here
+he's still sleeping
+uh more water
+pu more water
+uh more water
+water here
+water here
+nuh we hafta put peoples in here
+I hafta make ie_cweam
+I hafta make ie_cweam
+um on your bottom
+dat uh badder on your bottom
+no no dat a fader
+yeah
+see my fatterf right here
+das not a bwenner
+um sa fatterc
+more ie_cweam
+yeah yeah you get fwe
+um wed ie_cweam
+yeah
+it's just chwakit
+this orange
+yeah
+yeah deez guys want ice cream
+these guys
+deez guys want some ie cweam
+way down
+der gonna get ie cweam
+have lotsa cow cowboy give ice cream
+dere ants er chair
+he gots his own chair
+yeah
+yeah eat ie cweam
+yeah dis wike a miok shake
+dis wike a miok shake
+dis wike a miok shake
+look it this
+deez guys both
+both
+both
+deez guys boht Dada
+day bohs horn
+day bohs horn Dada
+day day bohs gotta horn
+day bohs gotta horn
+he fall on his head
+he fell on his head
+his head too
+day bohs gotta horn
+yeah dat a horn
+no dat a horn
+no dat a horn
+that's a horn
+that's a horn
+its not cor a car horn
+it's a car horn
+dat dat your waio there
+just a little
+yeah
+now d now der eat chwakit
+yeah
+oops
+uuuo
+day both fall over
+das your waio
+move
+bohs peoples falled down
+bohs peoples falled down
+bohs horns falled down
+da horn oops
+mm one horn
+one horn fall over
+yeah
+tsame here
+Kay now der eat ice cream
+becaud hoonac turn laho eat ie cweam
+yeah
+dat a cwown Dada
+that's a clown
+yeah
+um cowboy
+yeah
+dat mehder cowmboy
+he's a cowboy too
+he's a cowboy too
+he's got a hat
+he's got a hat
+he's got a hat
+he's got a hat Dada
+he's got a hat
+not me
+not me
+I have a hat
+yeah
+in in Tucson
+I have a hat in Tucson
+yeah many hats in Tucson
+he fall over
+he tur ah
+more ie cweam Dada
+yeah
+what's that
+das your watch
+day want more ie cweam
+way over"""
 # Load dataset
 dataset = Dataset.from_dict(data)
 
