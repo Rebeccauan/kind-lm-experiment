@@ -1,23 +1,24 @@
 # Experiment Plan
 
 ## Research Question
-How can clean, structured linguistic input and cognitively plausible feedback improve small language model robustness?
+How can developmentally appropriate child speech input and cognitively plausible interaction patterns improve sample efficiency and linguistic consistency in small-scale language models?
 
 ## Data
-- Clean, simplified sentences
-- Child-directed speech style
-- No noise, no errors
+- Cleaned spontaneous utterances from CHILDES Demetras Corpus
+- Only child-produced speech (CHI:), filtered for noise and annotations
+- Natural, repetitive, early-childhood linguistic patterns
 
 ## Model
-- Lightweight transformer (distilGPT2/tiny LM)
-- Low resource, sustainable
+- Lightweight autoregressive LM: DistilGPT2
+- Low-resource, sustainable, cognitively plausible scale
 
 ## Training
-- Epochs: 5–10
-- Batch size: 2–4
-- Evaluation: Perplexity (PPL)
+- Train/validation split: 90/10
+- Epochs: 10
+- Batch size: 4
+- Evaluation: Perplexity (PPL) on validation set
 
-## Feedback
-- Recasting: correct forms
-- Expansion: natural extensions
-- Implicit learning signals
+## Generation & Evaluation
+- Generate 10 child-like utterances from natural prompts
+- Qualitative evaluation: consistency with child speech style
+- Quantitative baseline: perplexity as core fluency metric
