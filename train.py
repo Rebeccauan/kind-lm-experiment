@@ -1,13 +1,13 @@
-# Minimal training script for a small cognitively-inspired language model (KIND-LM experiment)
-# Uses clean, simplified child-directed text for sample-efficient training
+# Minimal training script for KIND-LM pilot experiment
+# Cognitively-inspired, sample-efficient language modeling on child speech data
 
 from transformers import AutoTokenizer, AutoModelForCausalLM, Trainer, TrainingArguments
 from datasets import Dataset
 import math
 
-# ------------------------------------------------------------
-# 1. Load and prepare corpus (CHILDES Demetras, child-only)
-# ------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# Child speech corpus (cleaned CHILDES Demetras, child-only utterances)
+# ------------------------------------------------------------------------------
 data = """that's my water
 I'm gonna uh reek it
 put it in duh boat
@@ -247,36 +247,35 @@ day want more ie cweam
 way over
 """
 
+# Prepare dataset
 lines = [line.strip() for line in data.splitlines() if line.strip()]
 dataset = Dataset.from_dict({"text": lines})
 
-# Split into train and validation
+# 90/10 train/validation split (consistent with experiment plan)
 dataset_split = dataset.train_test_split(test_size=0.1, seed=42)
-train_data = dataset_split["train"]
-eval_data = dataset_split["test"]
+train_dataset = dataset_split["train"]
+eval_dataset = dataset_split["test"]
 
-# ------------------------------------------------------------
-# 2. Tokenizer & Model
-# ------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# Model & Tokenizer: DistilGPT2 (lightweight, sustainable LM)
+# ------------------------------------------------------------------------------
 tokenizer = AutoTokenizer.from_pretrained("distilgpt2")
 tokenizer.pad_token = tokenizer.eos_token
 model = AutoModelForCausalLM.from_pretrained("distilgpt2")
 
-# ------------------------------------------------------------
-# 3. Tokenize
-# ------------------------------------------------------------
-def tokenize_function(examples):
+# Tokenization
+def tokenize_fn(examples):
     return tokenizer(examples["text"], truncation=True, padding="max_length", max_length=32)
 
-tokenized_train = train_data.map(tokenize_function, batched=True)
-tokenized_eval = eval_data.map(tokenize_function, batched=True)
+tokenized_train = train_dataset.map(tokenize_fn, batched=True)
+tokenized_eval = eval_dataset.map(tokenize_fn, batched=True)
 
 tokenized_train.set_format("torch", columns=["input_ids", "attention_mask"])
 tokenized_eval.set_format("torch", columns=["input_ids", "attention_mask"])
 
-# ------------------------------------------------------------
-# 4. Training
-# ------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# Training configuration (matches experiment plan)
+# ------------------------------------------------------------------------------
 training_args = TrainingArguments(
     output_dir="./results",
     num_train_epochs=10,
@@ -287,28 +286,31 @@ training_args = TrainingArguments(
     save_strategy="epoch",
     logging_dir="./logs",
     logging_steps=10,
-    report_to="none"
+    report_to="none",
+    seed=42
 )
 
+# Train
 trainer = Trainer(
     model=model,
     args=training_args,
     train_dataset=tokenized_train,
-    eval_dataset=tokenized_eval,
+    eval_dataset=tokenized_eval
 )
-
 trainer.train()
 
-# ------------------------------------------------------------
-# 5. Perplexity
-# ------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# Evaluation: Perplexity (core metric)
+# ------------------------------------------------------------------------------
 eval_results = trainer.evaluate()
 perplexity = math.exp(eval_results["eval_loss"])
-print(f"\n===== Validation Perplexity: {perplexity:.2f} =====")
+print("\n==========================================")
+print(f"Validation Perplexity: {perplexity:.2f}")
+print("==========================================\n")
 
-# ------------------------------------------------------------
-# 6. Generate 10 sentences to match 10 references
-# ------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# Generate 10 child-like utterances (matched to reference set)
+# ------------------------------------------------------------------------------
 from transformers import pipeline
 generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
 
@@ -325,14 +327,6 @@ prompts = [
     "put it"
 ]
 
-print("\n--- Generated Child-Directed Sentences ---")
-generated_sentences = []
-for i, prompt in enumerate(prompts):
-    out = generator(prompt, max_length=12, num_return_sequences=1)[0]['generated_text']
-    generated_sentences.append(out)
-    print(f"{i+1}. {out}")
-
-# Reference sentences (10 total, matched 1:1)
 reference_sentences = [
     "uh more water",
     "dere's my car",
@@ -345,3 +339,10 @@ reference_sentences = [
     "he's got a hat",
     "put it in duh boat"
 ]
+
+print("--- Generated Child Utterances ---")
+generated = []
+for i, prompt in enumerate(prompts):
+    output = generator(prompt, max_length=12, num_return_sequences=1)[0]["generated_text"]
+    generated.append(output)
+    print(f"{i+1:2d}. {output}")
