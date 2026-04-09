@@ -16,7 +16,11 @@ All utterances are short, repetitive, semantically simple, and structurally alig
 - Implicit naturalistic feedback (recasting & expansion)
 - Small, sustainable model architectures
 - Evaluation focused on robustness and interpretability
+Why child‑only corpus?
+This corpus trains the child model only on child‑produced utterances. It captures the starting point of language acquisition: simple, repetitive, sometimes non‑standard speech. This allows the model to later benefit from implicit feedback from a parent model, rather than being directly fed adult‑like correct forms.
 
+Next step – parent model
+A separate parent model (trained on clean, adult input or a stronger pre‑trained LM) will be introduced. It will recast the child’s output into correct forms, enabling the child model to self‑correct through comparison – exactly as described in the KIND‑LM project.
 ## Experiment Design
 1. Corpus Construction: Small, curated, grammatically consistent text
 2. Training Setup: Minimal and efficient training
