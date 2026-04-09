@@ -9,7 +9,8 @@ Raw utterances were cleaned in two processing steps:
 
 2. Annotation symbols, timestamps, fillers, and irrelevant markers were removed to retain clean, natural child speech for model training.
 
-All utterances are short, repetitive, semantically simple, and structurally aligned with real parental input to young children. This design supports modeling implicit learning, recasting, and gradual, natural language acquisition patterns.
+All utterances are short, repetitive, semantically simple, and reflect the kind of language a child actually produces – which is the natural starting point before any adult-like input.
+
 
 ## Core Idea
 - Clean, well-formed child-directed linguistic input
