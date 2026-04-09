@@ -1,10 +1,388 @@
-I like to read books.
-The sun is bright.
-She plays with toys.
-We walk in the park.
-He eats an apple.
-Birds sing in the tree.
-I draw a picture.
-They run together.
-The dog is friendly.
-I help my friends.
+Look at the doggy.
+See the birdie.
+Oh, pretty flower.
+Yes, that's right.
+Good job.
+You're so good.
+I like it.
+You like it.
+More.
+Again.
+Play ball.
+Throw ball.
+Catch ball.
+Kick ball.
+I run.
+You run.
+We run.
+Jump jump.
+High jump.
+I jump.
+You jump.
+We jump.
+Sing song.
+Nice song.
+I sing.
+You sing.
+We sing.
+Read book.
+Book here.
+Read to me.
+I read.
+You read.
+We read.
+Eat apple.
+Yummy apple.
+I eat.
+You eat.
+We eat.
+Drink milk.
+Good milk.
+I drink.
+You drink.
+We drink.
+Sleepy now.
+Time to sleep.
+Night night.
+Bed time.
+Wake up.
+Good morning.
+Hi there.
+Hello baby.
+Mommy here.
+Daddy home.
+Love you.
+Love you too.
+Kiss kiss.
+Hug hug.
+Where's ball.
+There's ball.
+Where's bear.
+There's bear.
+Where's dog.
+There's dog.
+What's this.
+It's a car.
+What's that.
+It's a doll.
+What color.
+Red car.
+Blue ball.
+Green tree.
+Yellow flower.
+Big dog.
+Small cat.
+Soft bear.
+Hard block.
+Hot soup.
+Cold milk.
+Happy today.
+Good day.
+Fun play.
+More play.
+Again please.
+Please.
+Thank you.
+You're welcome.
+Sorry.
+That's okay.
+Excuse me.
+Come here.
+Let's go.
+Go outside.
+Play outside.
+See sky.
+See clouds.
+See birds.
+See bugs.
+Watch me.
+Look at me.
+Look here.
+Look at that.
+Do it again.
+Let's play.
+Let's sing.
+Let's read.
+Let's eat.
+Let's drink.
+Sit down please.
+Stand up please.
+Open the door.
+Close the door.
+Open your book.
+Close your book.
+Take the toy.
+Give it to me.
+Give me the cup.
+Here you are.
+Here it is.
+I see you.
+I see the cat.
+I see the dog.
+I see the bird.
+I see a car.
+I see a toy.
+I see a tree.
+I see a flower.
+It's a bird.
+It's a dog.
+It's a cat.
+It's a toy.
+It's a ball.
+It's a book.
+It's funny.
+It's nice.
+It's good.
+It's soft.
+It's hard.
+It's big.
+It's small.
+It's hot.
+It's cold.
+I am happy.
+You are happy.
+We are happy.
+I am good.
+You are good.
+We are good.
+I am little.
+You are little.
+I am big.
+You are big.
+My toy.
+My book.
+My ball.
+My cup.
+Your toy.
+Your book.
+Your ball.
+Your cup.
+Daddy is here.
+Mommy is here.
+Baby is here.
+Dog is here.
+Cat is here.
+Ball is here.
+Toy is here.
+Where is it.
+Where is mommy.
+Where is daddy.
+Where is baby.
+Where is the ball.
+Where is the toy.
+Where is the book.
+Where is the cup.
+Want more.
+Want milk.
+Want water.
+Want apple.
+Want banana.
+Want bread.
+Want toy.
+Want ball.
+I want milk.
+I want water.
+I want apple.
+I want banana.
+I want bread.
+I want toy.
+I want ball.
+I want book.
+I want to play.
+I want to sing.
+I want to read.
+I want to run.
+I want to jump.
+Do you like it.
+Yes, I like it.
+No, I don't like it.
+I like milk.
+I like water.
+I like apple.
+I like banana.
+I like bread.
+I like ball.
+I like toy.
+I like book.
+I like dog.
+I like cat.
+I like bird.
+I like to play.
+I like to sing.
+I like to read.
+I like to run.
+I like to jump.
+I can play.
+I can sing.
+I can read.
+I can run.
+I can jump.
+I can walk.
+I can dance.
+I can draw.
+You can play.
+You can sing.
+You can read.
+You can run.
+You can jump.
+We can play.
+We can sing.
+We can read.
+We can run.
+We can jump.
+This is big.
+This is small.
+This is hot.
+This is cold.
+This is soft.
+This is hard.
+This is red.
+This is blue.
+This is green.
+This is yellow.
+This is pink.
+This is orange.
+This is purple.
+This is brown.
+This is black.
+This is white.
+That is big.
+That is small.
+That is hot.
+That is cold.
+That is soft.
+That is hard.
+That is red.
+That is blue.
+That is green.
+That is yellow.
+Sun is bright.
+Moon is bright.
+Stars are bright.
+Sky is blue.
+Clouds are white.
+Grass is green.
+Flowers are pretty.
+Trees are tall.
+Birds can fly.
+Dogs can run.
+Cats can jump.
+Fish can swim.
+Rabbits can hop.
+Good boy.
+Good girl.
+Good baby.
+Good job.
+Well done.
+That's right.
+That's good.
+Very good.
+Very nice.
+Very funny.
+Very happy.
+Time to eat.
+Time to drink.
+Time to play.
+Time to sing.
+Time to read.
+Time to sleep.
+Time to wake up.
+Time to go home.
+Time to go out.
+Let's go home.
+Let's go out.
+Let's go play.
+Let's go walk.
+Let's go run.
+Let's go jump.
+Come play with me.
+Play with me please.
+Sing with me please.
+Read with me please.
+Eat with me please.
+Drink with me please.
+Run with me please.
+Jump with me please.
+Walk with me please.
+Smile for me.
+Say please.
+Say thank you.
+Say sorry.
+Say excuse me.
+Say hello.
+Say goodbye.
+Goodbye everyone.
+See you tomorrow.
+See you soon.
+Night night baby.
+Sleep tight baby.
+Sweet dreams baby.
+I love you so much.
+You are my baby.
+You are my love.
+You are my sweet.
+You are so cute.
+You are so nice.
+You are so good.
+You are so funny.
+You are so happy.
+We love you so much.
+Family is happy.
+We are together.
+We are a family.
+Play together now.
+Sing together now.
+Read together now.
+Eat together now.
+Drink together now.
+Run together now.
+Jump together now.
+Walk together now.
+Dance together now.
+Draw together now.
+All done now.
+Finished now.
+Clean up now.
+Put it away now.
+Put toy away.
+Put book away.
+Put ball away.
+Put cup away.
+Wash hands please.
+Wash face please.
+Brush teeth please.
+Comb hair please.
+Get dressed please.
+Put shoes on.
+Put coat on.
+Put hat on.
+Ready to go.
+Let's go now.
+Let's start now.
+Let's finish now.
+Wait a minute.
+Wait for me.
+Wait please.
+Hurry up please.
+Slow down please.
+Be careful please.
+Be gentle please.
+Be quiet please.
+Be happy please.
+Be good please.
+Look outside.
+See outside.
+Play outside.
+Run outside.
+Jump outside.
+Walk outside.
+Fresh air.
+Nice day.
+Sunny day.
+Happy day.
+Fun day.
+Great day.
+Wonderful day.
+Beautiful day.
+Lovely day.
+Perfect day.
