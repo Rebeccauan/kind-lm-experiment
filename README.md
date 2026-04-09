@@ -34,3 +34,6 @@ A separate parent model (trained on clean, adult input or a stronger pre‑train
 - Robust, safe, auditable model behaviour
 ## Usage
 Run the training script with Python or on Google Colab GPU for accelerated experimentation.
+
+## Planned Extension: TinyBERT for Visually Impaired Child Language
+A follow-up experiment is planned using TinyBERT (4M–6M) — a highly compact model designed specifically for resource-constrained environments. Its extremely small size makes it cognitively plausible for modeling the early stages of language acquisition, where cognitive capacity is naturally limited. This model will be evaluated on speech data from visually impaired children, whose language development follows a distinct, perceptually constrained trajectory. The goal is to explore how small model capacity and restricted input modalities interact to shape linguistic generalization.
