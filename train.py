@@ -292,6 +292,6 @@ from transformers import pipeline
 generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
 
 print("\n--- Generated Child-Directed Sentences ---")
-generator("dere's", max_length=12)
-generator("it's", max_length=12)
-generator("he's", max_length=12)
+print(generator("dere's", max_length=12, num_return_sequences=1))
+print(generator("it's", max_length=12, num_return_sequences=1))
+print(generator("he's", max_length=12, num_return_sequences=1))
