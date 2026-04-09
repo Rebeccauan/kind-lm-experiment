@@ -1,3 +1,5 @@
+# Minimal training script for a small cognitively-inspired language model (KIND-LM experiment)
+# Uses clean, simplified child-directed text for sample-efficient training
 from transformers import AutoTokenizer, AutoModelForCausalLM, Trainer, TrainingArguments
 from datasets import Dataset
 
