@@ -1,10 +1,13 @@
 # Minimal training script for a small cognitively-inspired language model (KIND-LM experiment)
 # Uses clean, simplified child-directed text for sample-efficient training
+
 from transformers import AutoTokenizer, AutoModelForCausalLM, Trainer, TrainingArguments
 from datasets import Dataset
 import math
 
-# Small, clean child-directed text corpus
+# ------------------------------------------------------------
+# 1. Load and prepare corpus (CHILDES Demetras, child-only)
+# ------------------------------------------------------------
 data = """that's my water
 I'm gonna uh reek it
 put it in duh boat
@@ -244,67 +247,92 @@ day want more ie cweam
 way over
 """
 
-# --------------- ---------------
 lines = [line.strip() for line in data.splitlines() if line.strip()]
 dataset = Dataset.from_dict({"text": lines})
 
-# Load tokenizer and model
+# Split into train and validation
+dataset_split = dataset.train_test_split(test_size=0.1, seed=42)
+train_data = dataset_split["train"]
+eval_data = dataset_split["test"]
+
+# ------------------------------------------------------------
+# 2. Tokenizer & Model
+# ------------------------------------------------------------
 tokenizer = AutoTokenizer.from_pretrained("distilgpt2")
 tokenizer.pad_token = tokenizer.eos_token
 model = AutoModelForCausalLM.from_pretrained("distilgpt2")
 
-# Tokenize data
+# ------------------------------------------------------------
+# 3. Tokenize
+# ------------------------------------------------------------
 def tokenize_function(examples):
     return tokenizer(examples["text"], truncation=True, padding="max_length", max_length=32)
 
-tokenized_dataset = dataset.map(tokenize_function, batched=True)
-tokenized_dataset.set_format("torch", columns=["input_ids", "attention_mask"])
+tokenized_train = train_data.map(tokenize_function, batched=True)
+tokenized_eval = eval_data.map(tokenize_function, batched=True)
 
-# Set training arguments
+tokenized_train.set_format("torch", columns=["input_ids", "attention_mask"])
+tokenized_eval.set_format("torch", columns=["input_ids", "attention_mask"])
+
+# ------------------------------------------------------------
+# 4. Training
+# ------------------------------------------------------------
 training_args = TrainingArguments(
     output_dir="./results",
-    num_train_epochs=10,       
+    num_train_epochs=10,
     per_device_train_batch_size=4,
-    learning_rate=5e-5,        
+    per_device_eval_batch_size=4,
+    learning_rate=5e-5,
+    evaluation_strategy="epoch",
+    save_strategy="epoch",
     logging_dir="./logs",
     logging_steps=10,
-    evaluation_strategy="no",
-    save_strategy="no",
     report_to="none"
 )
 
-# Initialize trainer and train
 trainer = Trainer(
     model=model,
     args=training_args,
-    train_dataset=tokenized_dataset,
+    train_dataset=tokenized_train,
+    eval_dataset=tokenized_eval,
 )
 
 trainer.train()
 
-# Perplexity
-eval_results = trainer.evaluate(eval_dataset=tokenized_dataset)
+# ------------------------------------------------------------
+# 5. Perplexity
+# ------------------------------------------------------------
+eval_results = trainer.evaluate()
 perplexity = math.exp(eval_results["eval_loss"])
-print(f"\n===== Perplexity: {perplexity:.2f} =====")
+print(f"\n===== Validation Perplexity: {perplexity:.2f} =====")
 
-# Generation
+# ------------------------------------------------------------
+# 6. Generate 10 sentences to match 10 references
+# ------------------------------------------------------------
 from transformers import pipeline
 generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
 
+prompts = [
+    "uh more",
+    "dere's",
+    "look at",
+    "it's",
+    "he's",
+    "yeah eat",
+    "no dat",
+    "bohs",
+    "he's got",
+    "put it"
+]
+
 print("\n--- Generated Child-Directed Sentences ---")
-print(generator("dere's", max_length=12, num_return_sequences=1))
-print(generator("it's", max_length=12, num_return_sequences=1))
-print(generator("he's", max_length=12, num_return_sequences=1))
+generated_sentences = []
+for i, prompt in enumerate(prompts):
+    out = generator(prompt, max_length=12, num_return_sequences=1)[0]['generated_text']
+    generated_sentences.append(out)
+    print(f"{i+1}. {out}")
 
-# ---------- Evaluation: BLEU & ROUGE ----------
-# Run once: pip install evaluate nltk
-import evaluate
-import nltk
-from nltk.tokenize import word_tokenize
-
-nltk.download('punkt', quiet=True)
-
-# Reference sentences (from your corpus, user-selected)
+# Reference sentences (10 total, matched 1:1)
 reference_sentences = [
     "uh more water",
     "dere's my car",
@@ -317,22 +345,3 @@ reference_sentences = [
     "he's got a hat",
     "put it in duh boat"
 ]
-
-# Generated sentences (using high-frequency prefixes from your data)
-gen1 = generator("dere's", max_length=12, num_return_sequences=1)[0]['generated_text']
-gen2 = generator("it's", max_length=12, num_return_sequences=1)[0]['generated_text']
-gen3 = generator("he's", max_length=12, num_return_sequences=1)[0]['generated_text']
-generated_sentences = [gen1, gen2, gen3]
-
-# BLEU (requires tokenization)
-bleu = evaluate.load("bleu")
-references_tokenized = [[word_tokenize(ref)] for ref in reference_sentences]
-predictions_tokenized = [word_tokenize(pred) for pred in generated_sentences]
-bleu_score = bleu.compute(predictions=predictions_tokenized, references=references_tokenized)
-print(f"\nBLEU score: {bleu_score['bleu']:.4f}")
-
-# ROUGE (works on raw strings)
-rouge = evaluate.load("rouge")
-rouge_score = rouge.compute(predictions=generated_sentences, references=reference_sentences)
-print(f"ROUGE-1: {rouge_score['rouge1']:.4f}")
-print(f"ROUGE-L: {rouge_score['rougeL']:.4f}")
