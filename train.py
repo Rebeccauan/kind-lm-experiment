@@ -432,3 +432,16 @@ trainer = Trainer(
 )
 
 trainer.train()
+
+import math
+eval_results = trainer.evaluate()
+perplexity = math.exp(eval_results["eval_loss"])
+print(f"\n===== Perplexity: {perplexity:.2f} =====")
+
+from transformers import pipeline
+generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
+
+print("\n--- Generated Child-Directed Sentences ---")
+print(generator("Look at the", max_length=12, num_return_sequences=1))
+print(generator("I like to", max_length=12, num_return_sequences=1))
+print(generator("I want", max_length=12, num_return_sequences=1))
