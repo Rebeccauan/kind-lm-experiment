@@ -248,6 +248,7 @@ way over
 """
 
 # Prepare dataset
+lines = [line.strip() for line in data.splitlines() if line.strip()]
 # ============================================================
 # Approach 2: Remove reference sentences (all occurrences) before splitting
 # ============================================================
