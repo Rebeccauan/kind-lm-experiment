@@ -58,3 +58,6 @@ Both the model and the population reflect natural constraints: one in learning c
 - Test whether matching model constraints to human cognitive/perceptual limits improves plausibility
 - Provide a reproducible baseline for the full KIND-LM interaction framework
 - Support research in human-centered, robust, and safe language modeling
+
+## References
+Demetras, M. (1989b). Working parents conversational responses to their two-year-old sons. Working paper. University of Arizona.
