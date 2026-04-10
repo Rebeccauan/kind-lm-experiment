@@ -12,8 +12,8 @@ data = """that's my water
 I'm gonna uh reek it
 put it in duh boat
 yeah
-gasps cars go in there
-gasps cars go in there
+cars go in there
+cars go in there
 dere's water in dere Dada
 dere's water in dere Dada
 look at dis water Dada
@@ -248,14 +248,41 @@ way over
 """
 
 # Prepare dataset
-lines = [line.strip() for line in data.splitlines() if line.strip()]
-dataset = Dataset.from_dict({"text": lines})
+# ============================================================
+# Approach 2: Remove reference sentences (all occurrences) before splitting
+# ============================================================
 
-# 90/10 train/validation split (consistent with experiment plan)
+# 1. Define the list of reference sentences (the 10 you manually selected)
+reference_sentences = [
+    "uh more water",
+    "dere's my car",
+    "look at dis Dada",
+    "it's a dwiveway",
+    "he's still sleeping",
+    "yeah eat ie cweam",
+    "no dat a horn",
+    "bohs peoples falled down",
+    "he's got a hat",
+    "put it in duh boat"
+]
+
+# 2. Convert to a set for fast lookup
+ref_set = set(reference_sentences)
+
+# 3. Filter out all sentences that appear in the reference set (including duplicates)
+filtered_lines = [line for line in lines if line not in ref_set]
+
+# 4. Report how many sentences were removed
+removed_count = len(lines) - len(filtered_lines)
+print(f"Removed {removed_count} sentences (including duplicates) from the corpus.")
+
+# 5. Create a Dataset from the filtered data
+dataset = Dataset.from_dict({"text": filtered_lines})
+
+# 6. Then proceed with the 90/10 split as usual
 dataset_split = dataset.train_test_split(test_size=0.1, seed=42)
 train_dataset = dataset_split["train"]
 eval_dataset = dataset_split["test"]
-
 # ------------------------------------------------------------------------------
 # Model & Tokenizer: DistilGPT2 (lightweight, sustainable LM)
 # ------------------------------------------------------------------------------
