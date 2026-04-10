@@ -355,18 +355,7 @@ prompts = [
     "put it"
 ]
 
-reference_sentences = [
-    "uh more water",
-    "dere's my car",
-    "look at dis Dada",
-    "it's a dwiveway",
-    "he's still sleeping",
-    "yeah eat ie cweam",
-    "no dat a horn",
-    "bohs peoples falled down",
-    "he's got a hat",
-    "put it in duh boat"
-]
+
 
 print("--- Generated Child Utterances ---")
 generated = []
@@ -386,19 +375,6 @@ from bert_score import BERTScorer
 # Download punkt tokenizer (only needed once)
 nltk.download('punkt', quiet=True)
 
-# Reference sentences (same as used for generation)
-reference_sentences = [
-    "uh more water",
-    "dere's my car",
-    "look at dis Dada",
-    "it's a dwiveway",
-    "he's still sleeping",
-    "yeah eat ie cweam",
-    "no dat a horn",
-    "bohs peoples falled down",
-    "he's got a hat",
-    "put it in duh boat"
-]
 
 # Generated sentences are already in `generated` list
 
