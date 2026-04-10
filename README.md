@@ -48,7 +48,7 @@ Run the training script with Python or on Google Colab GPU for accelerated exper
 ## Planned Comparative Extension: Constrained Model & Constrained Corpus
 ### Rationale
 This follow-up experiment is based on a dual constraint matching design:
-- **Model Constraint**: Use TinyBERT (4M–6M), an extremely compact model designed for resource-constrained environments. Its small size reflects the limited cognitive capacity in early childhood language acquisition.
+- **Model Constraint**: Use TinyStories‑1M or TinyGPT(1M‑10M), an extremely compact model designed for resource-constrained environments. Its small size reflects the limited cognitive capacity in early childhood language acquisition.
 - **Corpus Constraint**: Evaluate on speech data from visually impaired children (CHILDES Peters/Wilson Corpus), whose language development is shaped by restricted perceptual input.
 
 Both the model and the population reflect natural constraints: one in learning capacity, the other in sensory modality. By comparing TinyBERT with DistilGPT2, we aim to identify which setup better aligns with the goals of KIND-LM: building cognitively plausible, sample-efficient, and developmentally realistic language models.
