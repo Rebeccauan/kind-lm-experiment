@@ -365,11 +365,9 @@ for i, prompt in enumerate(prompts):
     print(f"{i+1:2d}. {output}")
 
 # ------------------------------------------------------------------------------
-# Evaluation metrics: BLEU, ROUGE, BERTScore
+# Evaluation metrics: BERTScore
 # ------------------------------------------------------------------------------
-import evaluate
-import nltk
-from nltk.tokenize import word_tokenize
+
 from bert_score import BERTScorer
 
 # Download punkt tokenizer (only needed once)
@@ -378,20 +376,8 @@ nltk.download('punkt', quiet=True)
 
 # Generated sentences are already in `generated` list
 
-# 1. BLEU
-bleu = evaluate.load("bleu")
-references_tokenized = [[word_tokenize(ref)] for ref in reference_sentences]
-predictions_tokenized = [word_tokenize(pred) for pred in generated]
-bleu_score = bleu.compute(predictions=predictions_tokenized, references=references_tokenized)
-print(f"\nBLEU score: {bleu_score['bleu']:.4f}")
 
-# 2. ROUGE
-rouge = evaluate.load("rouge")
-rouge_score = rouge.compute(predictions=generated, references=reference_sentences)
-print(f"ROUGE-1: {rouge_score['rouge1']:.4f}")
-print(f"ROUGE-L: {rouge_score['rougeL']:.4f}")
-
-# 3. BERTScore
+# BERTScore
 scorer = BERTScorer(lang="en", rescale_with_baseline=True)
 P, R, F1 = scorer.score(generated, reference_sentences)
 print(f"BERTScore F1: {F1.mean():.4f}")
