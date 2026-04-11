@@ -7,7 +7,9 @@ This project uses a subset of the CHILDES Demetras Corpus, which contains natura
 Raw utterances were cleaned in two processing steps:
 1. Only utterances produced by the child (marked as *CHI:) were extracted.
 2. Annotation symbols, timestamps, fillers, and irrelevant markers were removed to retain clean, natural child speech for model training.
-
+3. Held out 10 manually selected reference child utterances as held-out items.
+4. Split the remaining corpus into 90% train / 10% validation
+   
 All utterances are short, repetitive, semantically simple, and reflect the kind of language a child actually produces – which is the natural starting point before any adult-like input.
 
 ## Core Idea
@@ -22,12 +24,13 @@ This corpus trains the child model only on child-produced utterances. It capture
 
 ## Next Step – Parent Model
 A separate parent model (trained on clean, adult input or a stronger pre-trained LM) will be introduced. It will recast the child’s output into correct forms, enabling the child model to self-correct through comparison – exactly as described in the KIND-LM project.
+It will map child errors (phonological, morphosyntactic, semantic, pragmatic) to parental strategies (recast, expansion, clarification, ignore) and provide feedback in an interactive learning loop.
 
 ## Experiment Design
 1. Corpus Construction: Cleaned child-only utterances from CHILDES
 2. Training Setup: Lightweight models with small batch size and limited epochs
 3. Learning Signals: Imitate caregiver–child interaction patterns
-4. Evaluation: Perplexity (PPL), generation consistency, stability
+4. Evaluation: Perplexity (PPL), BLEU, ROUGE,BERTScore,generation consistency, stability
 5. Comparative analysis between constrained and less constrained models
 
 ## Training Configuration
@@ -36,6 +39,7 @@ A separate parent model (trained on clean, adult input or a stronger pre-trained
 - Batch size: 4
 - Train/validation split: 90/10
 - Evaluation: Perplexity on validation set
+- Metrics: Perplexity, BLEU, ROUGE, BERTScore
 
 ## Relevance
 - Cognitively plausible language modelling
