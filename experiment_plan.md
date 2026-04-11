@@ -7,6 +7,7 @@ How can developmentally appropriate child speech input and cognitively plausible
 - Cleaned spontaneous utterances from CHILDES Demetras Corpus
 - Only child-produced speech (CHI:), filtered for noise and annotations
 - Natural, repetitive, early-childhood linguistic patterns
+- Held out 10 manually selected reference child utterances as held-out items.
 
 ## Model
 - Lightweight autoregressive LM: DistilGPT2
@@ -19,6 +20,8 @@ How can developmentally appropriate child speech input and cognitively plausible
 - Evaluation: Perplexity (PPL) on validation set
 
 ## Generation & Evaluation
-- Generate 10 child-like utterances from natural prompts
-- Qualitative evaluation: consistency with child speech style
-- Quantitative baseline: perplexity as core fluency metric
+- Generate 10 child-like utterances from natural prompts (using the same prefixes as the held-out reference sentences)
+- Quantitative evaluation:
+  - Perplexity on validation set (core fluency metric)
+  - BERTScore against the 10 held-out reference sentences (semantic similarity)
+- Qualitative evaluation: manual inspection of generated utterances for child-like style, natural repetition, and grammatical plausibility
