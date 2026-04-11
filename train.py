@@ -293,8 +293,7 @@ model = AutoModelForCausalLM.from_pretrained("distilgpt2")
 
 # Tokenization
 def tokenize_fn(examples):
-    return tokenizer(examples["text"], truncation=True, padding="max_length", max_length=32)
-
+    return tokenizer(examples["text"], truncation=True, padding="longest", max_length=64)
 tokenized_train = train_dataset.map(tokenize_fn, batched=True)
 tokenized_eval = eval_dataset.map(tokenize_fn, batched=True)
 
@@ -359,7 +358,7 @@ prompts = [
 print("--- Generated Child Utterances ---")
 generated = []
 for i, prompt in enumerate(prompts):
-    output = generator(prompt, max_length=12, num_return_sequences=1)[0]["generated_text"]
+    output = generator(prompt, max_new_tokens=15, do_sample=True, temperature=0.4, pad_token_id=tokenizer.eos_token_id)[0]["generated_text"]
     generated.append(output)
     print(f"{i+1:2d}. {output}")
 
