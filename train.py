@@ -356,7 +356,6 @@ prompts = [
 ]
 
 
-
 print("--- Generated Child Utterances ---")
 generated = []
 for i, prompt in enumerate(prompts):
@@ -370,9 +369,7 @@ for i, prompt in enumerate(prompts):
 
 from bert_score import BERTScorer
 
-
 # Generated sentences are already in `generated` list
-
 
 # BERTScore
 scorer = BERTScorer(lang="en", rescale_with_baseline=True)
