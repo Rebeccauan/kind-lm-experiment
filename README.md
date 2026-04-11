@@ -30,7 +30,7 @@ It will map child errors (phonological, morphosyntactic, semantic, pragmatic) to
 1. Corpus Construction: Cleaned child-only utterances from CHILDES
 2. Training Setup: Lightweight models with small batch size and limited epochs
 3. Learning Signals: Imitate caregiver–child interaction patterns
-4. Evaluation: Perplexity (PPL), BLEU, ROUGE,BERTScore,generation consistency, stability
+4. Evaluation: Perplexity (PPL), BERTScore,generation consistency, stability
 5. Comparative analysis between constrained and less constrained models
 
 ## Training Configuration
@@ -39,7 +39,7 @@ It will map child errors (phonological, morphosyntactic, semantic, pragmatic) to
 - Batch size: 4
 - Train/validation split: 90/10
 - Evaluation: Perplexity on validation set
-- Metrics: Perplexity, BLEU, ROUGE, BERTScore
+- Metrics: Perplexity, BERTScore
 
 ## Relevance
 - Cognitively plausible language modelling
