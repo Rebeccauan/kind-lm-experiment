@@ -370,9 +370,6 @@ for i, prompt in enumerate(prompts):
 
 from bert_score import BERTScorer
 
-# Download punkt tokenizer (only needed once)
-nltk.download('punkt', quiet=True)
-
 
 # Generated sentences are already in `generated` list
 
