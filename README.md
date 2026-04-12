@@ -110,6 +110,29 @@ The model generates natural child-like utterances, including:
 - Phonetic spellings: *cweam, dere, dis, inna*
 - Repetitive patterns: *Dada, look at*
 - Short, fragmented, conversational turns
-  
+
+## Thoughts on the Experiment and Model Design Idea
+
+From this experiment, I observed that even with a very small corpus and a simple decoder-only structure, the model can already generate child-like utterances by mimicking surface-level morphology. This shows that merely imitating children’s speech patterns can be achieved through shallow text pattern matching alone.
+
+By examining the raw, unfiltered corpus, I also noticed many abrupt sentence breaks, fragmented expressions, sudden topic shifts, and special symbols that reflect sudden changes in children’s thinking or internal state. This made me realize that children’s language is driven by factors beyond textual context.
+
+Combined with real-world observations of children’s behavior, I found that children’s speech is not limited to conversational context. They often utter words unrelated to the current dialogue because they see something, hear a sound, feel hungry, sleepy, or experience other physical or attentional changes. These seemingly illogical jumps actually have clear triggers.
+
+Based on the experiment results, analysis of the unprocessed corpus, and real observations of children’s language behavior, I conclude that a decoder-only model cannot capture the logic, motivation, and authenticity of children’s language.
+
+Current mainstream LLMs only take previous text as their single input source and ignore the internal and external triggers behind children’s utterances. In reality, children’s language generation relies on at least three types of input: linguistic input from parents, external sensory input (vision, hearing, etc.), and internal physical and attentional states. Parental speech is only one source.
+
+From this, I plan to explore a multi-Encoder + single-Decoder architecture from an embodied cognition perspective, to better model how children actually produce language:
+
+1. Parent Encoder: processes conversational context between parent and child, capturing dialogue intent and topic.
+
+2. Sensory Encoder: encodes external sensory signals (visual, auditory) and internal physical states such as hunger or sleepiness, converting non-linguistic signals into usable representations.
+
+3. Attention / Memory Encoder: models the child’s attention focus and short-term memory, ensuring that shifts in speech have reasonable triggers.
+
+4. Child Decoder: fuses information from all three encoders to generate meaningful, logical, and developmentally appropriate language, rather than mindless text continuation.
+
+
 ## References
 Demetras, M. (1989b). Working parents conversational responses to their two-year-old sons. Working paper. University of Arizona.
