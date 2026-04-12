@@ -294,6 +294,7 @@ model = AutoModelForCausalLM.from_pretrained("distilgpt2")
 # Tokenization
 def tokenize_fn(examples):
     return tokenizer(examples["text"], truncation=True, padding="longest", max_length=64)
+outputs["labels"] = outputs["input_ids"].copy()
 tokenized_train = train_dataset.map(tokenize_fn, batched=True)
 tokenized_eval = eval_dataset.map(tokenize_fn, batched=True)
 
