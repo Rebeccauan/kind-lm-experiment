@@ -106,8 +106,9 @@ The model generates natural child-like utterances, including:
 - Phonetic spellings: *cweam, dere, dis, inna*
 - Repetitive patterns: *Dada, look at*
 - Short, fragmented, conversational turns
-- 
-### Note: The generated utterances appear relatively long due to `max_new_tokens` set during generation. The model tends to produce longer continuations given the generation length configuration, which can be adjusted for shorter, more fragmented child-like utterances.
+  
+### Note: 
+The generated utterances appear relatively long due to `max_new_tokens` set during generation. The model tends to produce longer continuations given the generation length configuration, which can be adjusted for shorter, more fragmented child-like utterances.
   
 ## References
 Demetras, M. (1989b). Working parents conversational responses to their two-year-old sons. Working paper. University of Arizona.
