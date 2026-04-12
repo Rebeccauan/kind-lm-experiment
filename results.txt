@@ -1,0 +1,34 @@
+==========================================
+Kind LM Experiment Final Results
+==========================================
+
+Model: distilgpt2
+Epochs: 10
+Learning rate: 5e-5 (linear decay)
+
+Validation Perplexity: 32.98
+BERTScore F1: 0.0906
+
+Eval Loss by Epoch:
+Epoch 1: 4.31
+Epoch 2: 3.595
+Epoch 3: 3.269
+Epoch 4: 3.202
+Epoch 5: 3.161
+Epoch 6: 3.224
+Epoch 7: 3.204
+Epoch 8: 3.382
+Epoch 9: 3.491
+Epoch 10: 3.496
+
+--- Generated Child Utterances ---
+1. uh more cweam Dada look at dis one more cweam Dada
+2. dere's water in dere Dada Dada Dada Dada Dada Dada
+3. look at my tick inna hoonas park Dada look at inna h
+4. it's a horn Dada look at dis one o's horn Dada look at
+5. he's a cowboy too' Dada look at Dada look at Dada look
+6. yeah eat ice cream' alright guys hafta say cheese in dere Dada dere
+7. no dat a horn Dada look at dis car Dada look at dis car D
+8. bohs horns falled down on his head' horn Dada look at inna
+9. he's a hat Dada Dada it Dada it Dada it Dada
+10. put it outta dere's dere's dere's dere's dere's dere's dere
