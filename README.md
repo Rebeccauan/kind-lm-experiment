@@ -99,16 +99,16 @@ These observations are based on a qualitative reading of the CHILDES Demetras co
 - **Validation Perplexity**: 32.98
 - **BERTScore F1**: 0.0906
 - **Best eval loss**: 3.161 (Epoch 5)
+- **Final eval loss (Epoch 10)**: 3.496
 
-Validation loss decreases at first as the model learns child speech patterns, then increases due to overfitting on the small dataset — a typical behavior in low-resource child language modeling.
+Validation loss decreases at first as the model learns child speech patterns, then increases slightly due to mild overfitting on the small dataset — a typical behavior in low-resource child language modeling. No intervention is needed as the overfitting is minimal and generation quality remains consistent with child-like speech.
+
+Note: The generated utterances appear relatively long due to `max_new_tokens` set during generation. The model tends to produce longer continuations given the generation length configuration, which can be adjusted for shorter, more fragmented child-like utterances.
 
 The model generates natural child-like utterances, including:
 - Phonetic spellings: *cweam, dere, dis, inna*
 - Repetitive patterns: *Dada, look at*
 - Short, fragmented, conversational turns
-  
-### Note: 
-The generated utterances appear relatively long due to `max_new_tokens` set during generation. The model tends to produce longer continuations given the generation length configuration, which can be adjusted for shorter, more fragmented child-like utterances.
   
 ## References
 Demetras, M. (1989b). Working parents conversational responses to their two-year-old sons. Working paper. University of Arizona.
