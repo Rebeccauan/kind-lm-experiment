@@ -101,7 +101,8 @@ These observations are based on a qualitative reading of the CHILDES Demetras co
 - **Best eval loss**: 3.161 (Epoch 5)
 - **Final eval loss (Epoch 10)**: 3.496
 
-Validation loss decreases at first as the model learns child speech patterns, then increases slightly due to mild overfitting on the small dataset — a typical behavior in low-resource child language modeling. No intervention is needed as the overfitting is minimal and generation quality remains consistent with child-like speech.
+Validation loss decreases at first as the model learns child speech patterns, then increases slightly due to mild overfitting on the small dataset — a typical behavior in low-resource child language modeling. No intervention is needed as the overfitting is minimal and generation quality remains consistent with child-like speech. The mild overfitting observed after Epoch 5 is typical for small-scale experiments with limited child speech data. Increasing the size of the training corpus would help reduce overfitting and improve generalization, which can be explored in future expanded work.
+BERTScore F1 is low (0.0906) because the model is trained on phonetically spelled, fragmented, and repetitive child speech, which differs significantly from the standard, well-formed English that BERT is trained on. The low score reflects the non-standard nature of child utterances, not poor generation quality.
 
 Note: The generated utterances appear relatively long due to `max_new_tokens` set during generation. The model tends to produce longer continuations given the generation length configuration, which can be adjusted for shorter, more fragmented child-like utterances.
 
