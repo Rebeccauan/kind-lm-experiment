@@ -292,15 +292,25 @@ tokenizer.pad_token = tokenizer.eos_token
 model = AutoModelForCausalLM.from_pretrained("distilgpt2")
 
 # Tokenization
+# Tokenization
 def tokenize_fn(examples):
-    return tokenizer(examples["text"], truncation=True, padding="longest", max_length=64)
-outputs["labels"] = outputs["input_ids"].copy()
+    tokenized = tokenizer(
+        examples["text"],
+        truncation=True,
+        padding="max_length",
+        max_length=64
+    )
+    tokenized["labels"] = [
+        [(tok if tok != tokenizer.pad_token_id else -100) for tok in ids]
+        for ids in tokenized["input_ids"]
+    ]
+    return tokenized
+
 tokenized_train = train_dataset.map(tokenize_fn, batched=True)
 tokenized_eval = eval_dataset.map(tokenize_fn, batched=True)
 
-tokenized_train.set_format("torch", columns=["input_ids", "attention_mask"])
-tokenized_eval.set_format("torch", columns=["input_ids", "attention_mask"])
-
+tokenized_train.set_format("torch", columns=["input_ids", "attention_mask", "labels"])
+tokenized_eval.set_format("torch", columns=["input_ids", "attention_mask", "labels"])
 # ------------------------------------------------------------------------------
 # Training configuration (matches experiment plan)
 # ------------------------------------------------------------------------------
